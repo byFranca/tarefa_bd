@@ -1,5 +1,6 @@
+--  CORRETO
+CREATE DATABASE IF NOT EXISTS wrpracti_northwind;
 
-CREATE database wrpracti_northwind;
 --
 -- Database: `wrpracti_northwind`
 --
@@ -9,7 +10,7 @@ CREATE database wrpracti_northwind;
 --
 -- Table structure for table `Categories`
 --
-
+USE wrpracti_northwind;
 CREATE TABLE IF NOT EXISTS `Categories` (
   `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
   `CategoryName` varchar(15) NOT NULL,

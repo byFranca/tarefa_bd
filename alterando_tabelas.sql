@@ -1,4 +1,4 @@
-
+-- CORRETO
 --
 -- Constraints for dumped tables
 --
