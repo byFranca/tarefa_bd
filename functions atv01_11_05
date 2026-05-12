@@ -1,5 +1,4 @@
-FUNCTIONS
-
+1.
 DELIMITER $$
 
 CREATE FUNCTION calcular_total_pedido(p_order_id INT)
@@ -17,3 +16,5 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+2.
