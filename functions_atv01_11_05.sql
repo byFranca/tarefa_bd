@@ -1,4 +1,4 @@
-1.
+--1.
 DELIMITER $$
 
 CREATE FUNCTION calcular_total_pedido(p_order_id INT)
@@ -17,4 +17,19 @@ END$$
 
 DELIMITER ;
 
-2.
+--2.
+DELIMITER $$
+
+CREATE FUNCTION fn_verificar_estoque(p_product_id INT)
+
+RETURNS VARCHAR(20)
+DETERMINISTIC
+
+BEGIN 
+IF (SELECT UnitsInStock FROM Products WHERE ProductID = p_product_id) > 10 THEN
+    RETURN "Estoque Ok";
+ELSE
+    RETURN "Estoque Baixo";
+END IF;
+
+END$$
