@@ -1,4 +1,4 @@
---1.
+--ATIVIDADE 1.
 DELIMITER $$
 
 CREATE FUNCTION calcular_total_pedido(p_order_id INT)
@@ -17,7 +17,7 @@ END$$
 
 DELIMITER ;
 
---2.
+--ATIVIDADE 2.
 DELIMITER $$
 
 CREATE FUNCTION fn_verificar_estoque(p_product_id INT)
