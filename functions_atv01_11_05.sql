@@ -17,7 +17,7 @@ END$$
 
 DELIMITER ;
 
---ATIVIDADE 2.
+-- ATIVIDADE 2.
 DELIMITER $$
 
 CREATE FUNCTION fn_verificar_estoque(p_product_id INT)
@@ -48,4 +48,28 @@ BEGIN
     WHERE p.ProductID = p_id;
     RETURN result;
 END$$
+DELIMITER ;
+
+-- ATIVIDADE 4
+DELIMITER $$
+
+CREATE FUNCTION fn_frete_gratis(p_order_id INT)
+RETURNS VARCHAR(20)
+DETERMINISTIC
+BEGIN
+    DECLARE v_total DECIMAL(10, 2);
+    DECLARE v_resultado VARCHAR(20);
+
+    SELECT fn_total_pedido(p_order_id) INTO v_total;
+
+    IF v_total >= 500 THEN
+        SET v_resultado = 'FRETE GRÁTIS';
+    ELSE
+        SET v_resultado = 'FRETE COBRADO';
+    END IF;
+
+    RETURN v_resultado;
+
+END$$
+
 DELIMITER ;
