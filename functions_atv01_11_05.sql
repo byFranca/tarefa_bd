@@ -108,3 +108,17 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- ATIVIDADE 6
+
+DELIMITER $$
+CREATE FUNCTION fn_tempo_entrega(order_id INT)
+RETURNS DATE
+DETERMINISTIC
+BEGIN
+    DECLARE v_data_final DATE
+    
+
+END$$
+
+DELIMITER ;
