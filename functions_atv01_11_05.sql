@@ -1,18 +1,18 @@
---ATIVIDADE 1.
+-- ATIVIDADE 1.
 DELIMITER $$
 
 CREATE FUNCTION fn_total_pedido(p_order_id INT)
 RETURNS DECIMAL(10, 2)
 DETERMINISTIC
 BEGIN
-    DECLARE fn_total_pedido DECIMAL(10, 2);
+    DECLARE v_total DECIMAL(10, 2);
 
     SELECT SUM(UnitPrice * Quantity * (1 - Discount))
-    INTO fn_total_pedido
+    INTO v_total
     FROM OrderDetails
     WHERE OrderID = p_order_id;
 
-    RETURN IFNULL(fn_total_pedido, 0);
+    RETURN IFNULL(v_total, 0);
 END$$
 
 DELIMITER ;
