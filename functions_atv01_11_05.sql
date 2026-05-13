@@ -112,13 +112,84 @@ DELIMITER ;
 -- ATIVIDADE 6
 
 DELIMITER $$
-CREATE FUNCTION fn_tempo_entrega(order_id INT)
-RETURNS DATE
+CREATE FUNCTION fn_tempo_entrega(p_order_id INT)
+RETURNS INT
 DETERMINISTIC
 BEGIN
-    DECLARE v_data_final DATE
+    DECLARE v_dias INT;
     
+    SELECT DATEDIFF(ShippedDate, OrderDate) INTO v_dias
+    FROM Orders
+    WHERE OrderID = p_order_id;
+    
+    RETURN v_dias;
+END$$
+DELIMITER ;
 
+-- ATIVIDADE 7
+
+SELECT 
+    o.OrderID AS Pedido, 
+    c.CompanyName AS Cliente, 
+    fn_total_pedido(o.OrderID) AS ValorTotal, 
+    fn_frete_gratis(o.OrderID) AS Frete, 
+    fn_tempo_entrega(o.OrderID) AS TempoEntrega, 
+    fn_nivel_cliente(c.CustomerID) AS NivelCliente
+FROM Orders o
+INNER JOIN Customers c ON o.CustomerID = c.CustomerID;
+
+-- ATIVIDADE 8 
+
+DELIMITER $$
+
+CREATE FUNCTION fn_comissao_funcionario(p_employee_id INT)
+RETURNS VARCHAR(10)
+DETERMINISTIC
+BEGIN
+    DECLARE v_total_vendido DECIMAL(10, 2);
+    DECLARE v_comissao VARCHAR(10);
+
+    SELECT SUM(od.UnitPrice * od.Quantity * (1 - od.Discount))
+    INTO v_total_vendido
+    FROM Orders o
+    INNER JOIN OrderDetails od ON o.OrderID = od.OrderID
+    WHERE o.EmployeeID = p_employee_id;
+
+    IF v_total_vendido > 50000 THEN
+        SET v_comissao = '10%';
+    ELSEIF v_total_vendido > 20000 THEN
+        SET v_comissao = '5%';
+    ELSE
+        SET v_comissao = '2%';
+    END IF;
+
+    RETURN v_comissao;
+END$$
+
+DELIMITER ;
+
+-- ATIVIDADE 9
+
+DELIMITER $$
+
+CREATE FUNCTION fn_produtos_mais_vendidos(p_product_id INT)
+RETURNS VARCHAR(20)
+DETERMINISTIC
+BEGIN
+    DECLARE v_quantidade_total INT;
+    DECLARE v_status VARCHAR(20);
+
+    SELECT SUM(Quantity) INTO v_quantidade_total
+    FROM OrderDetails
+    WHERE ProductID = p_product_id;
+
+    IF v_quantidade_total > 1000 THEN
+        SET v_status = 'MAIS VENDIDO';
+    ELSE
+        SET v_status = 'VENDA NORMAL';
+    END IF;
+
+    RETURN v_status;
 END$$
 
 DELIMITER ;
