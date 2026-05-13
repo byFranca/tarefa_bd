@@ -27,9 +27,9 @@ DETERMINISTIC
 
 BEGIN 
 IF (SELECT UnitsInStock FROM Products WHERE ProductID = p_product_id) > 10 THEN
-    RETURN "Estoque Ok";
+    RETURN "ESTOQUE OK";
 ELSE
-    RETURN "Estoque Baixo";
+    RETURN "ESTOQUE BAIXO";
 END IF;
 
 END$$
@@ -42,8 +42,8 @@ CREATE FUNCTION fn_categoria_produto(p_id INT)
 RETURNS VARCHAR(100)
 DETERMINISTIC
 BEGIN
-    DECLARE result VARCHAR(100);
-    SELECT c.CategoryName INTO result
+    DECLARE v_result VARCHAR(100);
+    SELECT c.CategoryName INTO v_result
     FROM products p INNER JOIN categories c ON p.CategoryID = c.CategoryID
     WHERE p.ProductID = p_id;
     RETURN result;
