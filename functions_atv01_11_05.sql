@@ -1,7 +1,7 @@
 --ATIVIDADE 1.
 DELIMITER $$
 
-CREATE FUNCTION calcular_total_pedido(p_order_id INT)
+CREATE FUNCTION fn_total_pedido(p_order_id INT)
 RETURNS DECIMAL(10, 2)
 DETERMINISTIC
 BEGIN
@@ -33,3 +33,19 @@ ELSE
 END IF;
 
 END$$
+DELIMITER ;
+    
+-- ATIVIDADE 3
+    
+DELIMITER $$
+CREATE FUNCTION fn_categoria_produto(p_id INT)
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+    DECLARE result VARCHAR(100);
+    SELECT c.CategoryName INTO result
+    FROM products p INNER JOIN categories c ON p.CategoryID = c.CategoryID
+    WHERE p.ProductID = p_id;
+    RETURN result;
+END$$
+DELIMITER ;
